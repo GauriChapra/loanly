@@ -13,13 +13,10 @@ const HeroSection = () => {
 
     return (
         <section className="relative h-screen w-full overflow-hidden">
-            {/* Background gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-blue-800 opacity-90 z-10"></div>
 
-            {/* Optional: Subtle background pattern */}
             <div className="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
 
-            {/* Content container */}
             <div className="relative h-full w-full flex items-center justify-center z-20">
                 <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
                     <div className="md:w-1/2 md:pr-12 text-white">
@@ -54,7 +51,6 @@ const HeroSection = () => {
                 </div>
             </div>
 
-            {/* Scroll indicator */}
             <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
                 <button
                     onClick={handleScroll}
