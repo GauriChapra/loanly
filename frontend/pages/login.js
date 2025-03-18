@@ -27,10 +27,10 @@ export default function Login() {
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">Sign in to your account</h2>
           <AuthForm view="sign_in" />
-          
+
           <div className="mt-6 text-center text-gray-600">
             <p>
-              Don't have an account?{' '}
+              Don&apos;t have an account?
               <Link href="/signup" className="text-blue-900 hover:text-blue-700 font-semibold">
                 Sign up
               </Link>
