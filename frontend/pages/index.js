@@ -63,18 +63,18 @@ export default function Home() {
       {showContactForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
-            <button 
-              onClick={() => setShowContactForm(false)} 
+            <button
+              onClick={() => setShowContactForm(false)}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
-            
+
             <h3 className="text-2xl font-bold text-blue-900 mb-4">Contact Us</h3>
             <p className="text-gray-600 mb-6">Have questions or need assistance? Reach out to our team.</p>
-            
+
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Full Name</label>
@@ -88,7 +88,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email Address</label>
                 <input
@@ -101,7 +101,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">Phone Number</label>
                 <input
@@ -114,7 +114,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-6">
                 <label htmlFor="message" className="block text-gray-700 font-medium mb-2">Message</label>
                 <textarea
@@ -127,7 +127,7 @@ export default function Home() {
                   required
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition duration-300"
@@ -187,7 +187,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">
             Experience <span className="text-yellow-400">Modern Banking</span> Features
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4">
@@ -198,7 +198,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Virtual AI Branch Manager</h3>
               <p className="text-gray-600">Interact with our AI manager through video conversations, just like in a physical branch.</p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -208,7 +208,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Video-Based Interaction</h3>
               <p className="text-gray-600">Record video responses instead of filling out lengthy paper forms.</p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -218,7 +218,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Simplified Documents</h3>
               <p className="text-gray-600">Upload documents via mobile or webcam - we'll extract all necessary information.</p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -238,7 +238,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">
             How <span className="text-yellow-400">Loanly</span> Works
           </h2>
-          
+
           <div className="flex flex-col md:flex-row justify-between">
             <div className="md:w-1/4 mb-8 md:mb-0 text-center">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4 mx-auto">
@@ -247,7 +247,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Start Conversation</h3>
               <p className="text-gray-600">Begin video interaction with our AI Branch Manager.</p>
             </div>
-            
+
             <div className="md:w-1/4 mb-8 md:mb-0 text-center">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-yellow-400 text-2xl font-bold">2</span>
@@ -255,7 +255,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Provide Information</h3>
               <p className="text-gray-600">Answer questions through video responses.</p>
             </div>
-            
+
             <div className="md:w-1/4 mb-8 md:mb-0 text-center">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-yellow-400 text-2xl font-bold">3</span>
@@ -263,7 +263,7 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-blue-900">Submit Documents</h3>
               <p className="text-gray-600">Upload required documents for verification.</p>
             </div>
-            
+
             <div className="md:w-1/4 mb-8 md:mb-0 text-center">
               <div className="rounded-full bg-blue-900 w-16 h-16 flex items-center justify-center mb-4 mx-auto">
                 <span className="text-yellow-400 text-2xl font-bold">4</span>
@@ -272,7 +272,7 @@ export default function Home() {
               <p className="text-gray-600">Receive instant feedback on your loan application.</p>
             </div>
           </div>
-          
+
           <div className="mt-16 text-center">
             <button className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition duration-300">
               Start Your Application
@@ -287,7 +287,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">
             What Our <span className="text-yellow-400">Customers</span> Say
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 p-6 rounded-lg shadow-md border-l-4 border-yellow-400">
               <div className="flex items-center mb-4">
@@ -301,7 +301,7 @@ export default function Home() {
               </div>
               <p className="text-gray-600">"I applied for a home loan without leaving my house. The video interaction felt so natural, and I got my approval in just hours!"</p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-lg shadow-md border-l-4 border-yellow-400">
               <div className="flex items-center mb-4">
                 <div className="rounded-full bg-blue-900 w-12 h-12 flex items-center justify-center mr-4">
@@ -314,7 +314,7 @@ export default function Home() {
               </div>
               <p className="text-gray-600">"Loanly's AI Branch Manager guided me through each step of my business loan application. Much easier than endless paperwork!"</p>
             </div>
-            
+
             <div className="bg-gray-50 p-6 rounded-lg shadow-md border-l-4 border-yellow-400">
               <div className="flex items-center mb-4">
                 <div className="rounded-full bg-blue-900 w-12 h-12 flex items-center justify-center mr-4">
@@ -337,7 +337,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12 text-blue-900">
             Get in <span className="text-yellow-400">Touch</span> With Us
           </h2>
-          
+
           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -352,7 +352,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="email-inline" className="block text-gray-700 font-medium mb-2">Email Address</label>
                 <input
@@ -365,7 +365,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="phone-inline" className="block text-gray-700 font-medium mb-2">Phone Number</label>
                 <input
@@ -378,7 +378,7 @@ export default function Home() {
                   required
                 />
               </div>
-              
+
               <div className="mb-6">
                 <label htmlFor="message-inline" className="block text-gray-700 font-medium mb-2">Message</label>
                 <textarea
@@ -391,7 +391,7 @@ export default function Home() {
                   required
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full bg-blue-900 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition duration-300"
@@ -423,7 +423,7 @@ export default function Home() {
               <p className="text-sm text-gray-300">Banking Beyond Branches</p>
               <p className="text-sm text-gray-300 mt-2">© 2025 Loanly. All rights reserved.</p>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
               <div>
                 <h4 className="text-yellow-400 font-semibold mb-3">Products</h4>
@@ -434,7 +434,7 @@ export default function Home() {
                   <li><a href="#" className="text-gray-300 hover:text-white transition duration-300">Education Loans</a></li>
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="text-yellow-400 font-semibold mb-3">Company</h4>
                 <ul className="space-y-2">
@@ -444,7 +444,7 @@ export default function Home() {
                   <li><a href="#" className="text-gray-300 hover:text-white transition duration-300">Contact</a></li>
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="text-yellow-400 font-semibold mb-3">Support</h4>
                 <ul className="space-y-2">
