@@ -1,8 +1,20 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter();
+    const { user, signOut } = useAuth();
+
+    const handleAuth = async () => {
+        if (user) {
+            await signOut();
+        } else {
+            router.push('/login');
+        }
+    };
 
     return (
         <nav className="bg-blue-900 text-white sticky top-0 z-50">
@@ -44,6 +56,27 @@ const Navbar = () => {
                     <Link href="#contact">
                         <span className="hover:text-yellow-400 transition duration-300 cursor-pointer">Contact</span>
                     </Link>
+                    {user ? (
+                        <button
+                            onClick={signOut}
+                            className="bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-blue-900 transition duration-300"
+                        >
+                            Sign Out
+                        </button>
+                    ) : (
+                        <div className="flex items-center space-x-4">
+                            <Link href="/login">
+                                <button className="bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-blue-900 transition duration-300">
+                                    Sign In
+                                </button>
+                            </Link>
+                            <Link href="/signup">
+                                <button className="bg-transparent border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-blue-900 transition duration-300">
+                                    Sign Up
+                                </button>
+                            </Link>
+                        </div>
+                    )}
                     <Link href="#apply">
                         <button className="bg-yellow-400 text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition duration-300">
                             Get Started
@@ -68,9 +101,36 @@ const Navbar = () => {
                         <Link href="#contact">
                             <span className="block hover:text-yellow-400 transition duration-300" onClick={() => setIsMenuOpen(false)}>Contact</span>
                         </Link>
+                        {user ? (
+                            <button
+                                onClick={signOut}
+                                className="bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-blue-900 transition duration-300"
+                            >
+                                Sign Out
+                            </button>
+                        ) : (
+                            <>
+                                <Link href="/login">
+                                    <button
+                                        className="bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-2 rounded-full font-semibold hover:bg-yellow-400 hover:text-blue-900 transition duration-300 w-full"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Sign In
+                                    </button>
+                                </Link>
+                                <Link href="/signup">
+                                    <button
+                                        className="bg-transparent border-2 border-white text-white px-6 py-2 rounded-full font-semibold hover:bg-white hover:text-blue-900 transition duration-300 w-full"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        Sign Up
+                                    </button>
+                                </Link>
+                            </>
+                        )}
                         <Link href="#apply">
                             <button
-                                className="bg-yellow-400 text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 inline-block"
+                                className="bg-yellow-400 text-blue-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 w-full"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Get Started
