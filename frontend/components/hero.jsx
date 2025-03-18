@@ -30,7 +30,7 @@ const HeroSection = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <a
-                                href="#apply"
+                                href="/applynow"
                                 className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-center text-lg"
                             >
                                 Apply for a Loan

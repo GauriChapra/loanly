@@ -1,4 +1,3 @@
-// components/cta.js
 import React from 'react';
 
 const CTASection = () => {
@@ -11,7 +10,8 @@ const CTASection = () => {
                 <p className="text-lg mb-8 max-w-2xl mx-auto">
                     Apply for your loan today with our AI Branch Manager. No more waiting in lines or filling out paperwork.
                 </p>
-                <button className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-lg">
+                <button className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-lg"
+                    onClick={() => window.location.href = "/applynow"}>
                     Get Started Now
                 </button>
             </div>

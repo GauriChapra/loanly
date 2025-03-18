@@ -122,7 +122,10 @@ const HowItWorksSection = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.8 }}
                 >
-                    <button className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 hover:shadow-lg transform hover:-translate-y-1 text-lg">
+                    <button className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 hover:shadow-lg transform hover:-translate-y-1 text-lg"
+                        onClick={() => {
+                            window.location.href = '/applynow';
+                        }}>
                         Start Your Application
                     </button>
                     <p className="mt-4 text-gray-500">No credit check required to get started</p>
