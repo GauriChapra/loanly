@@ -55,13 +55,11 @@ export function AuthProvider({ children }) {
     }
   }, [router])
 
-  const signIn = async () => {
+  const signIn = async (email, password) => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`
-        }
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
       })
       if (error) throw error
     } catch (error) {
