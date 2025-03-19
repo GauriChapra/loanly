@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/router';
 
 const HowItWorksSection = () => {
     const steps = [
@@ -30,6 +32,18 @@ const HowItWorksSection = () => {
     ];
 
     const containerRef = useRef(null);
+
+    const router = useRouter();
+    const { user } = useAuth();
+
+    const handleApplyClick = (e) => {
+        e.preventDefault();
+        if (user) {
+            router.push('/applynow');
+        } else {
+            router.push('/login');
+        }
+    };
 
     // For animating on scroll
     useEffect(() => {
@@ -123,15 +137,13 @@ const HowItWorksSection = () => {
                     transition={{ duration: 0.6, delay: 0.8 }}
                 >
                     <button className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 hover:shadow-lg transform hover:-translate-y-1 text-lg"
-                        onClick={() => {
-                            window.location.href = '/applynow';
-                        }}>
+                        onClick={handleApplyClick}>
                         Start Your Application
                     </button>
                     <p className="mt-4 text-gray-500">No credit check required to get started</p>
                 </motion.div>
             </div>
-        </section>
+        </section >
     );
 };
 

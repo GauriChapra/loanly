@@ -7,9 +7,7 @@ import Tesseract from 'tesseract.js';
 
 const documentTypes = [
     { id: 'aadhaar-front', label: 'Aadhaar Card (Front)' },
-    { id: 'aadhaar-back', label: 'Aadhaar Card (Back)' },
     { id: 'pan-front', label: 'PAN Card (Front)' },
-    { id: 'pan-back', label: 'PAN Card (Back)' },
     { id: 'tax-papers', label: 'Income Tax Documents' },
 ];
 

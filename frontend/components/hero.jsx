@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import VideoPlayer from "./videoplayer";
+import { useAuth } from '../context/AuthContext';
 
 const HeroSection = () => {
     const [isScrolling, setIsScrolling] = useState(false);
+    const router = useRouter();
+    const { user } = useAuth();
 
     const handleScroll = () => {
         const howItWorksSection = document.getElementById('how-it-works');
         if (howItWorksSection) {
             howItWorksSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const handleApplyClick = (e) => {
+        e.preventDefault();
+        if (user) {
+            router.push('/applynow');
+        } else {
+            router.push('/login');
         }
     };
 
@@ -29,12 +42,12 @@ const HeroSection = () => {
                             Apply for loans anytime, anywhere.
                         </p>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a
-                                href="/applynow"
+                            <button
+                                onClick={handleApplyClick}
                                 className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-center text-lg"
                             >
                                 Apply for a Loan
-                            </a>
+                            </button>
                             <button
                                 onClick={handleScroll}
                                 className="border-2 border-white px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-900 transition duration-300 text-center text-lg"

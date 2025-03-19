@@ -8,15 +8,15 @@
     "start": "next start",
     "lint": "next lint"
   },
-
   "dependencies": {
     "@react-three/fiber": "^9.1.0",
-    "@supabase/ssr": "^0.1.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.7",
     "@tabler/icons-react": "^3.31.0",
     "clsx": "^2.1.1",
+    "face-api.js": "^0.22.2",
     "motion": "^12.5.0",
     "next": "15.2.2",
     "react": "^19.0.0",
@@ -27,7 +27,6 @@
     "tesseract.js": "^6.0.0",
     "three": "^0.174.0"
   },
-
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
