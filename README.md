@@ -1,9 +1,13 @@
 # Loanly - AI-Powered Video-Based Loan Assistance Platform
 
-> **🏆 Standard Chartered Hackathon 2025 Submission**  
+>  Standard Chartered Hackathon 2025 Submission
 > Revolutionizing the loan application process through AI-driven video interactions and automated document processing.
 
-## 🎯 Executive Summary
+## click to watch the demo
+[![Watch the video](https://res.cloudinary.com/doslhy0tq/image/upload/v1742367579/Screenshot_2025-03-19_at_12.29.09_PM_edtwhk.png)
+](https://drive.google.com/file/d/1YlRMl3laXxryugWpwybO3ZQYv5dQl8Oi/view?usp=sharing)
+
+## Executive Summary
 
 Loanly transforms the traditional loan application process by combining AI-powered video interactions with automated document verification. Our solution addresses key pain points in the banking sector:
 
@@ -36,7 +40,7 @@ The traditional loan application process faces several challenges:
    - Lack of real-time feedback
    - Inconsistent experience
 
-## 💡 Innovation Highlights
+## Innovation Highlights
 
 ### 1. AI Virtual Branch Manager
 - **Human-like Interaction**: Pre-recorded video dialogues that guide users naturally
@@ -54,6 +58,35 @@ The traditional loan application process faces several challenges:
 - **Secure Recording**: End-to-end encrypted video storage
 
 ## 🛠️ Technical Implementation
+
+### Backend API Endpoints
+
+### Document Verification
+```
+⁠URL: ⁠ /api/document/upload ⁠
+⁠Method: POST
+⁠Description: Upload and process document images (Aadhaar, PAN, tax documents)
+Request Body: 
+  - ⁠ document ⁠: File (image)
+  - ⁠ type ⁠: Document type identifier (aadhaar-front, pan-front, tax-papers)
+  - ⁠ extracted_text ⁠: OCR extracted text (optional)
+Response: JSON with document verification results
+```
+### Video Verification
+```
+URL: ⁠ /api/video/upload ⁠
+Method: POST
+Description: Upload user verification video for identity confirmation
+Request Body:
+  - ⁠ video ⁠: File (video in webm, mp4, or mov format)
+Response: JSON with video ID and verification status
+```
+
+### Frontend Integration
+
+The frontend communicates with the backend through fetch API calls. The connection is established via:
+•⁠  ⁠Backend server: ⁠ http://localhost:8000 ⁠
+•⁠  ⁠Supabase for authentication: ⁠ https://hscikwtidhgozmhuamaj.supabase.co ⁠
 
 ### System Architecture
 
@@ -101,98 +134,46 @@ graph LR
 
 #### 1. Document Processing Service
 ```python
-class DocumentProcessor:
-    def __init__(self):
-        self.ocr = TesseractOCR()
-        self.validator = DocumentValidator()
-        self.extractor = DataExtractor()
-        
-    async def process_document(self, document: bytes) -> Dict:
-        # Preprocess document
-        processed_doc = await self.preprocess_document(document)
-        
-        # Extract text using OCR
-        text = await self.ocr.extract_text(processed_doc)
-        
-        # Validate document authenticity
-        validation_result = await self.validator.validate(processed_doc)
-        
-        # Extract structured data
-        data = await self.extractor.extract_structured_data(text)
-        
-        # Perform additional checks
-        checks = await self.perform_additional_checks(data)
-        
-        return {
-            "status": "success",
-            "data": data,
-            "validation": validation_result,
-            "checks": checks,
-            "confidence_score": self.calculate_confidence(data, validation_result, checks)
-        }
-        
-    async def preprocess_document(self, document: bytes) -> bytes:
-        # Convert to grayscale
-        img = cv2.imdecode(np.frombuffer(document, np.uint8), cv2.IMREAD_COLOR)
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        
-        # Apply adaptive thresholding
-        thresh = cv2.adaptiveThreshold(
-            gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-            cv2.THRESH_BINARY, 11, 2
-        )
-        
-        # Denoise
-        denoised = cv2.fastNlMeansDenoising(thresh)
-        
-        return cv2.imencode('.png', denoised)[1].tobytes()
+def process_document(file_path, doc_type):
+       ocr_attempts = [
+           lambda: pytesseract.image_to_string(preprocessed_image, lang='eng'),
+           
+           lambda: pytesseract.image_to_string(enhanced_image, lang='eng'),
+           
+       ]
+[19/03/25, 12:42:32 PM] Palash Shah: const extractTextFromImage = (file) => {
+       return new Promise((resolve, reject) => {
+           Tesseract.recognize(
+               file,
+               'eng+hin+tam', // Languages to recognize
+               'eng',
+               { logger: m => console.log(m) }
+           )
+           .then(({ data: { text } }) => {
+               console.log(⁠ Extracted Text from ${file.name}:\n------------------\n${text.trim()}\n------------------ ⁠);
+               resolve(text.trim());
+           })
+           .catch(error => reject(error));
+       });
+   };
 ```
 
-#### 2. Face Verification Service
+#### 2. document verification
 ```python
-class FaceVerification:
-    def __init__(self):
-        self.model = DeepFace.build_model("Face")
-        self.detector = cv2.CascadeClassifier(
-            cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-        )
-        
-    async def verify_identity(self, video_frame: np.ndarray) -> Dict:
-        # Detect faces
-        faces = self.detector.detectMultiScale(
-            video_frame, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
-        )
-        
-        if len(faces) == 0:
-            return {"status": "error", "message": "No face detected"}
-            
-        # Extract face embeddings
-        embeddings = await self.model.extract_embeddings(video_frame)
-        
-        # Compare with stored embeddings
-        similarity = await self.model.compare_embeddings(embeddings)
-        
-        # Additional checks
-        liveness = await self.check_liveness(video_frame)
-        quality = await self.check_quality(video_frame)
-        
-        return {
-            "status": "success",
-            "verified": similarity > 0.8,
-            "similarity_score": similarity,
-            "liveness_detected": liveness,
-            "image_quality": quality
-        }
-        
-    async def check_liveness(self, frame: np.ndarray) -> bool:
-        # Implement liveness detection
-        # This could include checking for eye blink, head movement, etc.
-        pass
-        
-    async def check_quality(self, frame: np.ndarray) -> float:
-        # Calculate image quality score
-        # This could include checking for blur, lighting, etc.
-        pass
+The project uses regex pattern matching extensively for document processing and verification:
+Core regex patterns for document extraction in /backend/app/services/document_processor.py:
+Aadhaar card number: r"\b(\d{4}\s?\d{4}\s?\d{4})\b" or r"\b(\d{12})\b"
+PAN card number: r"\b([A-Z]{5}[0-9]{4}[A-Z]{1})\b"
+Name extraction: r"(?:Name|नाम)[:\s]+([A-Z][A-Z\s]+)" (for uppercase) or r"(?:Name|नाम)[:\s]+([A-Za-z\s]+)" (mixed case)
+Date of birth: r"(?:DOB|Date of Birth|जन्म तिथि)[:\s]+(\d{1,2}[/-]\d{1,2}[/-]\d{2,4})"
+Address: r"(?:Address|पता)[:\s]+(.+)"
+Tax information:
+Income: r"(?:Gross Total Income|Total Income|Income)[:\s]+(?:Rs\.?|₹)?[,\s]*([\d,]+(?:\.\d{2})?)"
+Tax year: r"(?:Assessment Year|AY|Tax Year)[:\s]+(\d{4}-\d{2,4})"
+Validation rules in /backend/app/utils/validators.py:
+Aadhaar validation: r'^\d{12}$'
+PAN validation: r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$'
+These regex patterns are used to extract and validate important information from scanned documents after OCR processing, which is a critical part of the loan application verification process
 ```
 
 ### API Endpoints
@@ -284,64 +265,7 @@ async def get_document(document_id: str):
         return jsonify({"status": "error", "message": str(e)}), 500
 ```
 
-### Database Schema
-
-```sql
--- Users Table
-CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    full_name VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Documents Table
-CREATE TABLE documents (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES users(id),
-    document_type VARCHAR(50) NOT NULL,
-    content JSONB NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    confidence_score FLOAT,
-    validation_result JSONB,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Video Sessions Table
-CREATE TABLE video_sessions (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES users(id),
-    session_data JSONB NOT NULL,
-    verification_status BOOLEAN NOT NULL,
-    similarity_score FLOAT,
-    liveness_detected BOOLEAN,
-    image_quality FLOAT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Loan Applications Table
-CREATE TABLE loan_applications (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES users(id),
-    loan_type VARCHAR(50) NOT NULL,
-    amount DECIMAL(12,2) NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    eligibility_score FLOAT,
-    documents JSONB,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create indexes for better performance
-CREATE INDEX idx_documents_user_id ON documents(user_id);
-CREATE INDEX idx_video_sessions_user_id ON video_sessions(user_id);
-CREATE INDEX idx_loan_applications_user_id ON loan_applications(user_id);
-```
-
-## 🚀 Key Features
+## Key Features
 
 ### For Customers
 - **Interactive Video Interface**: Natural, guided loan application process
@@ -414,7 +338,7 @@ CREATE INDEX idx_loan_applications_user_id ON loan_applications(user_id);
    - Instant feedback
    - Clear status updates
 
-## 🔮 Future Roadmap
+## Future Roadmap
 
 1. **Enhanced AI Capabilities**
    - Natural Language Processing for better interactions
@@ -431,7 +355,7 @@ CREATE INDEX idx_loan_applications_user_id ON loan_applications(user_id);
    - Advanced encryption
    - Biometric authentication
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.12+
@@ -453,11 +377,5 @@ cd frontend
 npm install
 npm run dev
 ```
-
-## 📜 License
-
-This project is licensed under the **MIT License**.
-
----
 
 > **Note**: This project was developed for the Standard Chartered Hackathon 2025, focusing on innovation in digital banking solutions. 
