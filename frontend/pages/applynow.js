@@ -6,6 +6,7 @@ import DocumentUpload from '@/components/ApplyNow/DocumentsUploadCard';
 import SubmitApplication from '@/components/ApplyNow/SubmitApplication';
 import WebcamMonitor from '@/components/WebcamMonitor';
 import LoanApplicationForm from '@/components/ApplyNow/LoanApplicationForm';
+import LoanDecisionScreen from '@/components/ApplyNow/LoanDecisionScreen';
 
 export default function ApplyNow() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -17,8 +18,7 @@ export default function ApplyNow() {
     const [stepVideos] = useState({
         1: "/videos/start1.mp4",
         2: "/videos/docs.mp4",
-        3: "/videos/docs.mp4",
-        4: "/videos/docs.mp4"
+        // No video for step 3 and 4
     });
 
     const handleVideoRecorded = () => {
@@ -42,6 +42,31 @@ export default function ApplyNow() {
             setShowDocumentUpload(false);
             setIsModalClosing(false);
         }, 300);
+    };
+
+    const [applicationState, setApplicationState] = useState({
+        formSubmitted: false,
+        decisionData: null
+    });
+
+    const handleFormComplete = (data) => {
+        setApplicationState({
+            formSubmitted: true,
+            decisionData: data
+        });
+
+        // Move to step 4 after form submission and decision
+        if (data.decision === "approved") {
+            setCurrentStep(4);
+            setLoanData(data.formData);
+        }
+    };
+
+    const handleBackToForm = () => {
+        setApplicationState({
+            formSubmitted: false,
+            decisionData: null
+        });
     };
 
     useEffect(() => {
@@ -132,78 +157,108 @@ export default function ApplyNow() {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row gap-6 items-stretch">
-                    <div className="w-full md:w-1/2 bg-white shadow-md">
-                        <video
-                            src={stepVideos[currentStep]}
-                            className="w-full h-full object-cover"
-                            autoPlay
-                        >
-                            Your browser does not support the video tag.
-                        </video>
+                {/* Conditional rendering based on whether we're on the loan decision screen */}
+                {applicationState.formSubmitted && currentStep === 3 ? (
+                    <div className="w-full">
+                        <LoanDecisionScreen
+                            decision={applicationState.decisionData.decision}
+                            formData={applicationState.decisionData.formData}
+                            onBack={handleBackToForm}
+                        />
                     </div>
-
-                    <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
-                        {currentStep === 1 && (
-                            <VideoRecording
-                                onVideoRecorded={handleVideoRecorded}
-                                recordingDuration={5000}
-                            />
-                        )}
-
-                        {currentStep === 2 && (
-                            <div className="h-full flex flex-col justify-between">
-                                <div>
-                                    <h3 className="text-xl font-semibold mb-4">Upload Required Documents</h3>
-                                    <p className="text-gray-600 mb-4">
-                                        Your identity and income documents are required to process your loan application.
-                                    </p>
-
-                                    {documentsUploaded && (
-                                        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
-                                            <div className="flex items-center space-x-2 text-green-600">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                                </svg>
-                                                <span>All documents uploaded and verified</span>
-                                            </div>
+                ) : (
+                    <div className="flex flex-col md:flex-row gap-6 items-stretch">
+                        {/* Video container - only show for steps 1-2 */}
+                        {currentStep < 3 ? (
+                            <div className="w-full md:w-1/2 bg-white shadow-md">
+                                <video
+                                    src={stepVideos[currentStep]}
+                                    className="w-full h-full object-cover"
+                                    autoPlay
+                                >
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        ) : currentStep === 4 ? (
+                            <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+                                <div className="flex flex-col items-center justify-center h-full">
+                                    <div className="text-center">
+                                        <div className="mb-4 text-green-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                            </svg>
                                         </div>
-                                    )}
-                                </div>
-
-                                <div className="mt-6">
-                                    <button
-                                        onClick={handleDocumentsUpload}
-                                        className={`w-full px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${documentsUploaded
-                                            ? 'bg-green-500 hover:bg-green-600 text-white'
-                                            : 'bg-yellow-500 hover:bg-yellow-600 text-white'
-                                            }`}
-                                    >
-                                        {documentsUploaded ? 'Review Documents' : 'Upload Documents'}
-                                    </button>
+                                        <h3 className="text-xl font-semibold mb-2">{stepInfo[4].title}</h3>
+                                        <p className="text-gray-600 mb-4">{stepInfo[4].description}</p>
+                                        <ul className="text-sm text-gray-500 space-y-2 mb-6">
+                                            {stepInfo[4].instructions.map((instruction, index) => (
+                                                <li key={index} className="flex items-start">
+                                                    <span className="mr-2">•</span>
+                                                    <span>{instruction}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        )}
+                        ) : null}
 
-                        {currentStep === 3 && (
-                            <div className="h-full">
-                                <LoanApplicationForm
-                                    onComplete={(result) => {
-                                        setLoanData(result);
-                                        setCurrentStep(4);
-                                    }}
+                        <div className={`w-full ${currentStep < 3 || currentStep === 4 ? 'md:w-1/2' : ''} bg-white p-6 rounded-lg shadow-md`}>
+                            {currentStep === 1 && (
+                                <VideoRecording
+                                    onVideoRecorded={handleVideoRecorded}
+                                    recordingDuration={5000}
                                 />
-                            </div>
-                        )}
+                            )}
 
-                        {currentStep === 4 && (
-                            <SubmitApplication loanData={loanData} />
-                        )}
+                            {currentStep === 2 && (
+                                <div className="h-full flex flex-col justify-between">
+                                    <div>
+                                        <h3 className="text-xl font-semibold mb-4">Upload Required Documents</h3>
+                                        <p className="text-gray-600 mb-4">
+                                            Your identity and income documents are required to process your loan application.
+                                        </p>
+
+                                        {documentsUploaded && (
+                                            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+                                                <div className="flex items-center space-x-2 text-green-600">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span>All documents uploaded and verified</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-6">
+                                        <button
+                                            onClick={handleDocumentsUpload}
+                                            className={`w-full px-6 py-3 rounded-lg font-medium transition-colors duration-200 ${documentsUploaded
+                                                ? 'bg-green-500 hover:bg-green-600 text-white'
+                                                : 'bg-yellow-500 hover:bg-yellow-600 text-white'
+                                                }`}
+                                        >
+                                            {documentsUploaded ? 'Review Documents' : 'Upload Documents'}
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {currentStep === 3 && !applicationState.formSubmitted && (
+                                <div className="container mx-auto py-8 px-4 h-full">
+                                    <LoanApplicationForm onComplete={handleFormComplete} />
+                                </div>
+                            )}
+
+                            {currentStep === 4 && (
+                                <SubmitApplication loanData={loanData} />
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
-            {/* Document Upload Modal */}
             {showDocumentUpload && (
                 <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
                     <div className={`p-6 rounded-lg shadow-lg bg-white max-w-3xl w-full relative transition-opacity duration-300 ${isModalClosing ? 'opacity-0' : 'opacity-100'}`}>
