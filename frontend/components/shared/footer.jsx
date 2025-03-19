@@ -6,10 +6,8 @@ const Footer = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle newsletter subscription
         console.log('Subscribed with:', email);
         setEmail('');
-        // Add your subscription logic here
     };
 
     const currentYear = new Date().getFullYear();
@@ -17,9 +15,7 @@ const Footer = () => {
     return (
         <footer className="bg-gradient-to-br from-blue-900 to-blue-950 text-white pt-16 pb-8">
             <div className="container mx-auto px-6">
-                {/* Top section with logo, links and newsletter */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                    {/* Brand section */}
                     <div className="space-y-4">
                         <Link href="/">
                             <div className="flex items-center">
@@ -53,7 +49,6 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Quick links */}
                     <div>
                         <h4 className="text-lg font-semibold mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-yellow-400">Quick Links</h4>
                         <ul className="space-y-3">
@@ -79,7 +74,6 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Contact info */}
                     <div>
                         <h4 className="text-lg font-semibold mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-yellow-400">Contact Us</h4>
                         <ul className="space-y-4">
@@ -98,7 +92,6 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Newsletter */}
                     <div>
                         <h4 className="text-lg font-semibold mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-yellow-400">Newsletter</h4>
                         <p className="text-blue-200 mb-4">Subscribe to receive updates on new loan products and financial tips.</p>
@@ -123,10 +116,8 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Divider */}
                 <div className="border-t border-blue-800/50 mb-8"></div>
 
-                {/* Bottom section with copyright and links */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-blue-300 text-sm">
                     <div className="mb-4 md:mb-0">
                         © {currentYear} Loanly. All rights reserved.

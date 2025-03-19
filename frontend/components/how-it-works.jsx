@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/router';
 
 const HowItWorksSection = () => {
     const steps = [
@@ -31,7 +33,18 @@ const HowItWorksSection = () => {
 
     const containerRef = useRef(null);
 
-    // For animating on scroll
+    const router = useRouter();
+    const { user } = useAuth();
+
+    const handleApplyClick = (e) => {
+        e.preventDefault();
+        if (user) {
+            router.push('/applynow');
+        } else {
+            router.push('/login');
+        }
+    };
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -56,7 +69,6 @@ const HowItWorksSection = () => {
         };
     }, []);
 
-    // Animation variants for Framer Motion
     const containerVariants = {
         hidden: {},
         visible: {
@@ -123,20 +135,17 @@ const HowItWorksSection = () => {
                     transition={{ duration: 0.6, delay: 0.8 }}
                 >
                     <button className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 hover:shadow-lg transform hover:-translate-y-1 text-lg"
-                        onClick={() => {
-                            window.location.href = '/applynow';
-                        }}>
+                        onClick={handleApplyClick}>
                         Start Your Application
                     </button>
                     <p className="mt-4 text-gray-500">No credit check required to get started</p>
                 </motion.div>
             </div>
-        </section>
+        </section >
     );
 };
 
 const StepItem = ({ number, title, description, icon, isLast }) => {
-    // Animation variants
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -151,7 +160,6 @@ const StepItem = ({ number, title, description, icon, isLast }) => {
             className="relative flex flex-col items-center"
             variants={itemVariants}
         >
-            {/* Number circle with icon */}
             <div className="relative">
                 <div className="rounded-full bg-blue-900 w-20 h-20 flex items-center justify-center mb-6 shadow-lg transition-all duration-500 hover:shadow-xl hover:scale-105">
                     <span className="text-white text-3xl">{icon}</span>
@@ -161,7 +169,6 @@ const StepItem = ({ number, title, description, icon, isLast }) => {
                 </div>
             </div>
 
-            {/* Step content */}
             <div className="bg-white p-6 rounded-xl shadow-md w-full h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-t-4 border-blue-900">
                 <h3 className="text-xl font-bold mb-3 text-blue-900">{title}</h3>
                 <p className="text-gray-600">{description}</p>

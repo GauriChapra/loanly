@@ -1,6 +1,20 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { useAuth } from '../context/AuthContext';
 
 const CTASection = () => {
+    const router = useRouter();
+    const { user } = useAuth();
+
+    const handleApplyClick = (e) => {
+        e.preventDefault();
+        if (user) {
+            router.push('/applynow');
+        } else {
+            router.push('/login');
+        }
+    };
+
     return (
         <section className="py-20 bg-blue-900 text-white">
             <div className="container mx-auto px-6 text-center">
@@ -11,7 +25,7 @@ const CTASection = () => {
                     Apply for your loan today with our AI Branch Manager. No more waiting in lines or filling out paperwork.
                 </p>
                 <button className="bg-yellow-400 text-blue-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-lg"
-                    onClick={() => window.location.href = "/applynow"}>
+                    onClick={handleApplyClick}>
                     Get Started Now
                 </button>
             </div>

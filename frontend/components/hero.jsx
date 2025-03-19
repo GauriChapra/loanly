@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import VideoPlayer from "./videoplayer";
+import { useAuth } from '../context/AuthContext';
 
 const HeroSection = () => {
     const [isScrolling, setIsScrolling] = useState(false);
+    const router = useRouter();
+    const { user } = useAuth();
 
     const handleScroll = () => {
         const howItWorksSection = document.getElementById('how-it-works');
         if (howItWorksSection) {
             howItWorksSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const handleApplyClick = (e) => {
+        e.preventDefault();
+        if (user) {
+            router.push('/applynow');
+        } else {
+            router.push('/login');
         }
     };
 
@@ -29,12 +42,12 @@ const HeroSection = () => {
                             Apply for loans anytime, anywhere.
                         </p>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a
-                                href="/applynow"
+                            <button
+                                onClick={handleApplyClick}
                                 className="bg-yellow-400 text-blue-900 px-10 py-4 rounded-full font-semibold hover:bg-yellow-500 transition duration-300 text-center text-lg"
                             >
                                 Apply for a Loan
-                            </a>
+                            </button>
                             <button
                                 onClick={handleScroll}
                                 className="border-2 border-white px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-900 transition duration-300 text-center text-lg"
@@ -73,7 +86,6 @@ const HeroSection = () => {
     );
 };
 
-// Add this to your global CSS or style block
 const styles = `
     .bg-grid-pattern {
         background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");

@@ -7,9 +7,7 @@ import Tesseract from 'tesseract.js';
 
 const documentTypes = [
     { id: 'aadhaar-front', label: 'Aadhaar Card (Front)' },
-    { id: 'aadhaar-back', label: 'Aadhaar Card (Back)' },
     { id: 'pan-front', label: 'PAN Card (Front)' },
-    { id: 'pan-back', label: 'PAN Card (Back)' },
     { id: 'tax-papers', label: 'Income Tax Documents' },
 ];
 
@@ -43,7 +41,7 @@ export default function DocumentUpload({ onClose, onComplete }) {
                 file,
                 'eng+hin+tam', // Languages to recognize
                 'eng',
-                { logger: m => console.log(m) } // Logs progress
+                { logger: m => console.log(m) }
             )
                 .then(({ data: { text } }) => {
                     console.log(`Extracted Text from ${file.name}:\n------------------\n${text.trim()}\n------------------`);
@@ -57,35 +55,45 @@ export default function DocumentUpload({ onClose, onComplete }) {
 
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} transition={{ duration: 0.3 }}
-            className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+            className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden flex flex-col h-[80vh]">
             <div className="bg-blue-600 text-white p-4 flex justify-between">
                 <h1 className="text-2xl font-bold">Document Upload</h1>
                 <button onClick={onClose} className="text-white hover:bg-blue-700 p-2 rounded-full focus:outline-none">
                     &#x2715;
                 </button>
             </div>
-            <div className="p-6 space-y-6">
-                {documentTypes.map(({ id, label }) => (
-                    <motion.div key={id} layout className={`border p-4 rounded-lg ${documents[id].processing ? 'ring-2 ring-blue-400 bg-blue-50' : 'hover:bg-gray-50'}`}>
-                        <div className="flex justify-between items-center">
-                            <h2 className="text-lg font-semibold text-blue-700">{label}</h2>
-                            <label className={`cursor-pointer px-4 py-2 rounded-lg text-white ${documents[id].processing ? 'bg-gray-400' : documents[id].verified ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600'}`}>
-                                {documents[id].uploaded ? (documents[id].verified ? 'Replace' : 'Try Again') : 'Upload'}
-                                <input type="file" accept="image/png" className="hidden" onChange={e => handleFileChange(e, id)} disabled={documents[id].processing} />
-                            </label>
-                        </div>
-                        <AnimatePresence>
-                            {documents[id].error && <motion.div className="mt-2 text-red-500 text-sm">{documents[id].error}</motion.div>}
-                            {documents[id].processing && <motion.div className="mt-2 text-blue-600">Processing document...</motion.div>}
-                            {documents[id].preview && (
-                                <motion.div className="mt-4">
-                                    <Image src={documents[id].preview} alt={`Preview of ${label}`} width={200} height={100} className="border rounded-lg" />
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-                ))}
-                <motion.button whileTap={{ scale: 0.97 }} whileHover={{ scale: 1.03 }} className={`py-2 px-8 rounded-lg font-medium ${allVerified ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`} disabled={!allVerified || isSubmitting} onClick={onComplete}>
+            <div className="flex-1 overflow-y-auto p-6">
+                <div className="space-y-6">
+                    {documentTypes.map(({ id, label }) => (
+                        <motion.div key={id} layout className={`border p-4 rounded-lg ${documents[id].processing ? 'ring-2 ring-blue-400 bg-blue-50' : 'hover:bg-gray-50'}`}>
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-lg font-semibold text-blue-700">{label}</h2>
+                                <label className={`cursor-pointer px-4 py-2 rounded-lg text-white ${documents[id].processing ? 'bg-gray-400' : documents[id].verified ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600'}`}>
+                                    {documents[id].uploaded ? (documents[id].verified ? 'Replace' : 'Try Again') : 'Upload'}
+                                    <input type="file" accept="image/png" className="hidden" onChange={e => handleFileChange(e, id)} disabled={documents[id].processing} />
+                                </label>
+                            </div>
+                            <AnimatePresence>
+                                {documents[id].error && <motion.div className="mt-2 text-red-500 text-sm">{documents[id].error}</motion.div>}
+                                {documents[id].processing && <motion.div className="mt-2 text-blue-600">Processing document...</motion.div>}
+                                {documents[id].preview && (
+                                    <motion.div className="mt-4">
+                                        <Image src={documents[id].preview} alt={`Preview of ${label}`} width={200} height={100} className="border rounded-lg" />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+            <div className="p-6 border-t bg-white">
+                <motion.button
+                    whileTap={{ scale: 0.97 }}
+                    whileHover={{ scale: 1.03 }}
+                    className={`w-full py-3 px-8 rounded-lg font-medium ${allVerified ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                    disabled={!allVerified || isSubmitting}
+                    onClick={onComplete}
+                >
                     {isSubmitting ? 'Processing...' : 'Continue'}
                 </motion.button>
             </div>
