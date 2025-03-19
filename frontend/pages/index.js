@@ -7,6 +7,7 @@ import HowItWorksSection from '@/components/how-it-works';
 import CTASection from '@/components/cta';
 import TestimonialsSection from '@/components/testimonials';
 import ContactForm from '@/components/contact';
+import BackendHealth from '@/components/BackendHealth';
 
 export default function Home() {
   const [videoPlaying, setVideoPlaying] = useState(false);
@@ -26,6 +27,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Backend Health Check - Only visible in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed top-4 right-4 z-50">
+          <BackendHealth />
+        </div>
+      )}
 
       <HeroSection setVideoPlaying={setVideoPlaying} />
 
