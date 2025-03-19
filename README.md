@@ -29,7 +29,6 @@ Loanly is an AI-driven digital banking assistant designed to revolutionize the l
 ✔️ **Video-Based Customer Interaction** – Allows users to submit video responses instead of lengthy forms\
 ✔️ **Automated Document Processing** – Utilizes OCR to extract data from Aadhaar, PAN, and income proofs\
 ✔️ **Loan Eligibility Assessment** – Implements a rule-based decision system for real-time loan evaluation\
-✔️ **Multi-Language Support** – Provides pre-recorded assistant videos in multiple languages\
 ✔️ **Instant Feedback System** – Offers immediate approval, rejection, or additional document requests
 
 ---
@@ -59,11 +58,6 @@ Loanly is an AI-driven digital banking assistant designed to revolutionize the l
 - Uses a **rule-based eligibility engine** for fast decision-making
 - Evaluates income, employment status, and credit risk factors
 - Provides real-time loan status: ✅ Approved | ❌ Rejected | 🔄 More Info Needed
-
-### 5️⃣ Multi-Language Support (Optional Enhancement)
-
-- Offers video assistance in **multiple Indian languages**
-- Supports **dynamic language switching** for an inclusive user experience
 
 ---
 
@@ -261,7 +255,6 @@ npm start
 2. Video-based customer authentication
 3. Document upload and processing
 4. Loan eligibility assessment
-5. Multi-language support demonstration
 
 ### 📝 Presentation Structure
 
