@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -27,7 +28,7 @@ export default function Signup() {
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold text-blue-900 mb-6 text-center">Sign up for free</h2>
           <AuthForm view="sign_up" />
-          
+
           <div className="mt-6 text-center text-gray-600">
             <p>
               Already have an account?{' '}

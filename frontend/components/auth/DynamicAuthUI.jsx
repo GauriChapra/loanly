@@ -1,9 +1,20 @@
-// components/auth/DynamicAuthUI.js
+"use client";
+import { useState, useEffect } from 'react';
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { supabase } from '../../utils/supabase'
 
 export default function DynamicAuthUI({ view = 'sign_in', redirectTo = '/' }) {
+  const [origin, setOrigin] = useState('')
+
+  useEffect(() => {
+    setOrigin(window.location.origin)
+  }, [])
+
+  if (!supabase) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Auth
       supabaseClient={supabase}
@@ -64,7 +75,7 @@ export default function DynamicAuthUI({ view = 'sign_in', redirectTo = '/' }) {
       providers={[]}
       socialLayout="hidden"
       onlyThirdPartyProviders={false}
-      redirectTo={`${window.location.origin}/auth/callback`}
+      redirectTo={origin ? `${origin}/auth/callback` : undefined}
     />
   )
 }

@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../../utils/supabase'
@@ -6,9 +7,27 @@ export default function AuthCallback() {
   const router = useRouter()
 
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+    // Handle the initial session check
+    const checkSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession()
+        if (error) throw error
+        if (session) {
+          router.push('/')
+        }
+      } catch (error) {
+        console.error('Error checking session:', error.message)
+      }
+    }
+
+    checkSession()
+
+    // Listen for auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN') {
         router.push('/')
+      } else if (event === 'SIGNED_OUT') {
+        router.push('/login')
       }
     })
 
