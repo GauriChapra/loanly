@@ -18,7 +18,8 @@ export default function ApplyNow() {
     const [stepVideos] = useState({
         1: "/videos/start1.mp4",
         2: "/videos/docs.mp4",
-        // No video for step 3 and 4
+        3: "/videos/docs.mp4",
+        4: "/videos/final.mp4",
     });
 
     const handleVideoRecorded = () => {
@@ -56,10 +57,8 @@ export default function ApplyNow() {
         });
 
         // Move to step 4 after form submission and decision
-        if (data.decision === "approved") {
-            setCurrentStep(4);
-            setLoanData(data.formData);
-        }
+        setCurrentStep(4);
+        setLoanData(data.formData);
     };
 
     const handleBackToForm = () => {
@@ -168,42 +167,18 @@ export default function ApplyNow() {
                     </div>
                 ) : (
                     <div className="flex flex-col md:flex-row gap-6 items-stretch">
-                        {/* Video container - only show for steps 1-2 */}
-                        {currentStep < 3 ? (
-                            <div className="w-full md:w-1/2 bg-white shadow-md">
-                                <video
-                                    src={stepVideos[currentStep]}
-                                    className="w-full h-full object-cover"
-                                    autoPlay
-                                >
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        ) : currentStep === 4 ? (
-                            <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
-                                <div className="flex flex-col items-center justify-center h-full">
-                                    <div className="text-center">
-                                        <div className="mb-4 text-green-500">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <h3 className="text-xl font-semibold mb-2">{stepInfo[4].title}</h3>
-                                        <p className="text-gray-600 mb-4">{stepInfo[4].description}</p>
-                                        <ul className="text-sm text-gray-500 space-y-2 mb-6">
-                                            {stepInfo[4].instructions.map((instruction, index) => (
-                                                <li key={index} className="flex items-start">
-                                                    <span className="mr-2">•</span>
-                                                    <span>{instruction}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : null}
+                        {/* Video container - show for all steps */}
+                        <div className="w-full md:w-1/2 bg-white shadow-md">
+                            <video
+                                src={stepVideos[currentStep]}
+                                className="w-full h-full object-cover"
+                                autoPlay
+                            >
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
 
-                        <div className={`w-full ${currentStep < 3 || currentStep === 4 ? 'md:w-1/2' : ''} bg-white p-6 rounded-lg shadow-md`}>
+                        <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
                             {currentStep === 1 && (
                                 <VideoRecording
                                     onVideoRecorded={handleVideoRecorded}
