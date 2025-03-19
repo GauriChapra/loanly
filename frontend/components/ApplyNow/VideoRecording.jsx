@@ -58,7 +58,6 @@ export default function VideoRecording({ onVideoRecorded, recordingDuration = 10
         }
     };
 
-    // Handle the continue button click
     const handleContinue = () => {
         onVideoRecorded();
     };

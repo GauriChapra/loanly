@@ -18,7 +18,6 @@ export default function LoanDecisionScreen({ decision, formData, onBack }) {
                 </p>
             </div>
 
-            {/* Application Summary */}
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
                 <h3 className="text-lg font-semibold text-gray-700 mb-4">Application Summary</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -54,10 +53,8 @@ export default function LoanDecisionScreen({ decision, formData, onBack }) {
                 </div>
             </div>
 
-            {/* Decision Component */}
             <LoanDecision decision={decision} formData={formData} />
 
-            {/* Next Steps */}
             <div className="mt-6 bg-blue-50 p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-blue-700 mb-2">Next Steps</h3>
                 {decision.status === 'approved' && (
@@ -83,7 +80,6 @@ export default function LoanDecisionScreen({ decision, formData, onBack }) {
                 )}
             </div>
 
-            {/* Button to return to form */}
             <div className="flex justify-center mt-6">
                 <button
                     onClick={onBack}

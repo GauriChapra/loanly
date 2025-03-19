@@ -71,7 +71,6 @@ const WebcamMonitor = ({ onPersonChanged }) => {
                 height: minimized ? '40px' : '120px'
             }}
         >
-            {/* Webcam Feed */}
             {active && !minimized && (
                 <div className="relative w-full h-full">
                     {error ? (

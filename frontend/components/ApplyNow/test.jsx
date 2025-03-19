@@ -48,7 +48,6 @@ export default function ApplyNow() {
 
     const handleStartCapture = async () => {
         try {
-            // Initialize webcam
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: true
@@ -56,12 +55,10 @@ export default function ApplyNow() {
 
             setWebcamStream(stream);
 
-            // Connect stream to video element
             if (webcamRef.current) {
                 webcamRef.current.srcObject = stream;
             }
 
-            // Start recording
             setCapturing(true);
             setVideoRecording(true);
             setRecordedChunks([]);
@@ -90,7 +87,7 @@ export default function ApplyNow() {
             setTimeout(() => {
                 mediaRecorder.stop();
                 setVideoRecording(false);
-            }, 5000); // Stop recording after 5 seconds
+            }, 5000);
 
         } catch (err) {
             console.error("Error accessing webcam:", err);
@@ -447,5 +444,3 @@ export default function ApplyNow() {
         </div>
     );
 }
-
-take the DOCUMENT UPLOAD FROM HERE.

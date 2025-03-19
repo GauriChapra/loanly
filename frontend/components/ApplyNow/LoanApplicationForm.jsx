@@ -194,7 +194,6 @@ export default function LoanApplicationForm({ onComplete }) {
                     </div>
                 </div>
 
-                {/* Financial Information */}
                 <div className="bg-gray-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-gray-700 mb-4">Financial Information</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -239,7 +238,6 @@ export default function LoanApplicationForm({ onComplete }) {
                     </div>
                 </div>
 
-                {/* Employment Information */}
                 <div className="bg-blue-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-blue-700 mb-4">Employment Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -262,7 +260,6 @@ export default function LoanApplicationForm({ onComplete }) {
                     </div>
                 </div>
 
-                {/* Residence Information */}
                 <div className="bg-gray-50 p-4 rounded-lg">
                     <h3 className="text-lg font-semibold text-gray-700 mb-4">Residence Details</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -296,7 +293,6 @@ export default function LoanApplicationForm({ onComplete }) {
                     </div>
                 </div>
 
-                {/* Submit Button */}
                 <div className="flex justify-center pt-4">
                     <button
                         type="submit"

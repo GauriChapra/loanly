@@ -56,7 +56,6 @@ export default function ApplyNow() {
             decisionData: data
         });
 
-        // Move to step 4 after form submission and decision
         setCurrentStep(4);
         setLoanData(data.formData);
     };
@@ -156,7 +155,6 @@ export default function ApplyNow() {
                     </div>
                 </div>
 
-                {/* Conditional rendering based on whether we're on the loan decision screen */}
                 {applicationState.formSubmitted && currentStep === 3 ? (
                     <div className="w-full">
                         <LoanDecisionScreen
@@ -167,7 +165,6 @@ export default function ApplyNow() {
                     </div>
                 ) : (
                     <div className="flex flex-col md:flex-row gap-6 items-stretch">
-                        {/* Video container - show for all steps */}
                         <div className="w-full md:w-1/2 bg-white shadow-md">
                             <video
                                 src={stepVideos[currentStep]}

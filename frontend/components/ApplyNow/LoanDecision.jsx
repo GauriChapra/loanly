@@ -1,9 +1,7 @@
 "use client";
-
 import { motion } from 'framer-motion';
 
 export default function LoanDecision({ decision, formData }) {
-    // Status rendering based on decision status
     const renderStatusIndicator = () => {
         switch (decision.status) {
             case 'approved':

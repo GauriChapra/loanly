@@ -4,17 +4,14 @@ const VideoPlayer = ({ videoSrc = "/videos/start1.mp4" }) => {
     const [videoPlaying, setVideoPlaying] = useState(false);
     const videoRef = useRef(null);
 
-    // Auto-play video when component mounts
     useEffect(() => {
         const playVideo = async () => {
             try {
                 if (videoRef.current) {
-                    // Try to play video automatically
                     await videoRef.current.play();
                     setVideoPlaying(true);
                 }
             } catch (error) {
-                // Browser might block autoplay, handle that case
                 console.log('Autoplay was prevented:', error);
                 setVideoPlaying(false);
             }
@@ -33,7 +30,6 @@ const VideoPlayer = ({ videoSrc = "/videos/start1.mp4" }) => {
         }
     };
 
-    // When video ends, reset the playing state
     const handleVideoEnded = () => {
         setVideoPlaying(false);
     };
@@ -50,7 +46,6 @@ const VideoPlayer = ({ videoSrc = "/videos/start1.mp4" }) => {
                     playsInline
                 />
 
-                {/* Video controls */}
                 <div className="absolute bottom-4 right-4 z-10">
                     <button
                         className="bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all duration-300"

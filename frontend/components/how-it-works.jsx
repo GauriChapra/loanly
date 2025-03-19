@@ -45,7 +45,6 @@ const HowItWorksSection = () => {
         }
     };
 
-    // For animating on scroll
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -70,7 +69,6 @@ const HowItWorksSection = () => {
         };
     }, []);
 
-    // Animation variants for Framer Motion
     const containerVariants = {
         hidden: {},
         visible: {
@@ -148,7 +146,6 @@ const HowItWorksSection = () => {
 };
 
 const StepItem = ({ number, title, description, icon, isLast }) => {
-    // Animation variants
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -163,7 +160,6 @@ const StepItem = ({ number, title, description, icon, isLast }) => {
             className="relative flex flex-col items-center"
             variants={itemVariants}
         >
-            {/* Number circle with icon */}
             <div className="relative">
                 <div className="rounded-full bg-blue-900 w-20 h-20 flex items-center justify-center mb-6 shadow-lg transition-all duration-500 hover:shadow-xl hover:scale-105">
                     <span className="text-white text-3xl">{icon}</span>
@@ -173,7 +169,6 @@ const StepItem = ({ number, title, description, icon, isLast }) => {
                 </div>
             </div>
 
-            {/* Step content */}
             <div className="bg-white p-6 rounded-xl shadow-md w-full h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-t-4 border-blue-900">
                 <h3 className="text-xl font-bold mb-3 text-blue-900">{title}</h3>
                 <p className="text-gray-600">{description}</p>

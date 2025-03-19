@@ -6,7 +6,7 @@ const ContactForm = ({ inline = false, onClose = null }) => {
         email: '',
         phone: '',
         message: '',
-        loanType: 'personal' // Added field for loan type
+        loanType: 'personal'
     });
 
     const [formStatus, setFormStatus] = useState({
@@ -27,7 +27,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
         e.preventDefault();
         setFormStatus({ ...formStatus, submitting: true });
 
-        // Simulate API call with timeout
         setTimeout(() => {
             console.log('Form submitted:', formData);
             setFormStatus({
@@ -36,7 +35,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
                 error: null
             });
 
-            // Reset form after submission
             setTimeout(() => {
                 setFormData({
                     name: '',
@@ -53,7 +51,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
         }, 1000);
     };
 
-    // Success message after form submission
     const SuccessMessage = () => (
         <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
             <div className="flex items-center">
@@ -71,7 +68,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
         </div>
     );
 
-    // If this is a modal form, render with modal container
     if (!inline && onClose) {
         return (
             <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
@@ -103,7 +99,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
         );
     }
 
-    // Otherwise render the form directly
     return (
         <div id='contact' className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
             <div className="mb-8">
@@ -258,7 +253,6 @@ const ContactForm = ({ inline = false, onClose = null }) => {
     }
 };
 
-// Add this to your global CSS for the fade-in animation
 const styles = `
     @keyframes fadeIn {
         from { opacity: 0; transform: scale(0.95); }

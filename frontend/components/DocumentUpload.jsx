@@ -41,7 +41,7 @@ export default function DocumentUpload({ onClose, onComplete }) {
                 file,
                 'eng+hin+tam', // Languages to recognize
                 'eng',
-                { logger: m => console.log(m) } // Logs progress
+                { logger: m => console.log(m) }
             )
                 .then(({ data: { text } }) => {
                     console.log(`Extracted Text from ${file.name}:\n------------------\n${text.trim()}\n------------------`);
